@@ -60,14 +60,11 @@ char** environ;
 // Declared in <private/bionic_ssp.h>.
 uintptr_t __stack_chk_guard = 0;
 
-// Declared in <asm/page.h>.
-unsigned int __page_size = PAGE_SIZE;
-unsigned int __page_shift = PAGE_SHIFT;
-
 static size_t get_stack_size() {
   const size_t minimal_stack_size = 128 * 1024;
   size_t stack_size = minimal_stack_size;
   struct rlimit stack_limit;
+
   int rlimit_result = getrlimit(RLIMIT_STACK, &stack_limit);
   if ((rlimit_result == 0) && (stack_limit.rlim_cur != RLIM_INFINITY)) {
     stack_size = stack_limit.rlim_cur;
